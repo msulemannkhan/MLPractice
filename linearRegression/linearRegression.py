@@ -21,8 +21,19 @@ x1 = np.array(x1)
 
 x0 = np.ones((len(x1),))
 x = np.stack((x0, x1), axis=-1)
-
 theta = np.zeros(x.shape[1])
-print(theta)
 
+def costFunction(x, y, theta):
+    pridiction = x.dot(theta)
+    error = pridiction - y
+    cost = (error * error)/(2 * len(x))
+    return cost
 
+def gradientDescent(x, y, theta, alpha, iterations):
+    for i in range(5000):
+        pridiction = x.dot(theta)
+        error = pridiction - y
+        theta = theta - (alpha * (((np.transpose(error)).dot(x))/(len(x))))
+    return theta
+    
+#
