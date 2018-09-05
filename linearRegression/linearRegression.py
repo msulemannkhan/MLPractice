@@ -13,5 +13,16 @@ import pandas as pd                        #used to read a csv file
 
 #read data from csv file
 dataFrame = pd.read_csv("univariate_linear_regression_data.txt")
+x1 = dataFrame['x']
+y = dataFrame['y']
+
+# add x0 at the back of x colum [x0, x1] 100 rows, 2 columns
+x1 = np.array(x1)
+
+x0 = np.ones((len(x1),))
+x = np.stack((x0, x1), axis=-1)
+
+theta = np.zeros(x.shape[1])
+print(theta)
 
 
