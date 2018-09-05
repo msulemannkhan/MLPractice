@@ -16,6 +16,9 @@ dataFrame = pd.read_csv("univariate_linear_regression_data.txt")
 x1 = dataFrame['x']
 y = dataFrame['y']
 
+#plot data
+plt.plot(x1, y, 'o')
+
 # add x0 at the back of x colum [x0, x1] 100 rows, 2 columns
 x1 = np.array(x1)
 
@@ -29,11 +32,17 @@ def costFunction(x, y, theta):
     cost = (error * error)/(2 * len(x))
     return cost
 
+
 def gradientDescent(x, y, theta, alpha, iterations):
-    for i in range(5000):
+    J = [None]
+    for i in range(iterations):
         pridiction = x.dot(theta)
         error = pridiction - y
-        theta = theta - (alpha * (((np.transpose(error)).dot(x))/(len(x))))
-    return theta
-    
-#
+        cost = (((np.transpose(error)).dot(x))/(len(x)))
+        theta = theta - (alpha * cost)
+        J.append(costFunction(x, y, theta))
+    return J, theta
+alpha = 0.1
+iterations = 5000
+cost, theta = gradientDescent(x, y, theta, alpha, iterations)
+plt.plot(x1 , x.dot(theta), '-')    
