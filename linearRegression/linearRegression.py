@@ -29,20 +29,29 @@ theta = np.zeros(x.shape[1])
 def costFunction(x, y, theta):
     pridiction = x.dot(theta)
     error = pridiction - y
-    cost = (error * error)/(2 * len(x))
+    cost = (error.dot(np.transpose(error)))/(2 * len(x))
     return cost
 
 
 def gradientDescent(x, y, theta, alpha, iterations):
     J = [None]
-    for i in range(iterations):
+    for i in range(iterations-1):
         pridiction = x.dot(theta)
         error = pridiction - y
         cost = (((np.transpose(error)).dot(x))/(len(x)))
         theta = theta - (alpha * cost)
         J.append(costFunction(x, y, theta))
     return J, theta
-alpha = 0.1
-iterations = 5000
+	
+	
+print(f'Initial cost is: {costFunction(x, y, theta)}')
+alpha = 0.01
+iterations = 700
 cost, theta = gradientDescent(x, y, theta, alpha, iterations)
-plt.plot(x1 , x.dot(theta), '-')    
+plt.plot(x1 , x.dot(theta), '-')   
+print(f'After Gradient Descent cost is: {costFunction(x, y, theta)}')
+
+it = np.array(range(len(cost))) ;
+fig, debug = plt.subplots()
+debug.plot(it,cost,'-') 
+debug.set(xlabel='number of iterations', ylabel='cost', title='Debugging')
